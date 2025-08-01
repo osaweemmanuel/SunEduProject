@@ -72,6 +72,7 @@ namespace SunEduProject.Controllers
         {
             try
             {
+                Console.WriteLine($"Email Received: {forgetPasswordDto.Email}");
                 var result = await authServiceRespository.ForgetPasswordAsync(forgetPasswordDto);
                 return Ok(result);
             }

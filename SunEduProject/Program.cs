@@ -133,12 +133,12 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowFrontend", builder =>
+    options.AddPolicy("AllowFrontend", policyBuilder =>
     {
-        builder.WithOrigins("http://localhost:5173") // your frontend origin
-               .AllowAnyHeader()
-               .AllowAnyMethod()
-               .AllowCredentials(); // very important
+        policyBuilder.WithOrigins("http://localhost:5173")
+                     .AllowAnyHeader()
+                     .AllowAnyMethod()
+                     .AllowCredentials();
     });
 });
 

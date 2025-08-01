@@ -36,8 +36,7 @@ namespace SunEduProject.Service
                 throw new Exception("User not found.");
             }
             var token = await userManager.GeneratePasswordResetTokenAsync(user);
-            var resetUrl = $"https://tunshpreshgloballtd.com/reset-password?email={user.Email}&token={WebUtility.UrlEncode(token)}";
-
+            var resetUrl = $"http://localhost:5173/reset-password?email={user.Email}&token={WebUtility.UrlEncode(token)}";
 
             var emilDto = new SendEmailDto
             {
@@ -145,15 +144,14 @@ namespace SunEduProject.Service
                 {
                     throw new Exception("Passwords do not match.");
                 }
-
-                var result = await userManager.ResetPasswordAsync(user, WebUtility.UrlEncode(resetPasswordDto.Token), resetPasswordDto.NewPassword);
+                var result = await userManager.ResetPasswordAsync(user,resetPasswordDto.Token, resetPasswordDto.NewPassword);
                 if (!result.Succeeded)
                 {
                     var errors = string.Join(", ", result.Errors.Select(e => e.Description));
                     throw new Exception($"Password reset failed: {errors}");
                 }
 
-                await userManager.UpdateSecurityStampAsync(user);
+                await userManager.UpdateSecurityStampAsync(user); //update query
                 return true;
             }
             catch (Exception ex)
